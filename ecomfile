@@ -1,0 +1,171 @@
+code no:-1:-
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 200px;
+        }
+     #ss1{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:15px;
+     }
+     #ss1>div{
+        border:1px solid red;
+         text-align: center;
+     }
+    </style>
+</head>
+<body>
+    <a href="./cart121111111.html">Cart view</a>
+    <select name="" id="ss2">
+    <option value=""><i>select category</i></option>
+        <option value="men's clothing">men's clothing</option>
+        <option value="electronics">electronics</option>
+        <option value="jewelery">jewelery</option>
+    </select>
+  <div id="ss1">
+        
+  </div>
+</body>
+</html>
+<script src="./aaditya.js">
+
+</script>
+code:-2 js file:-
+  
+  let url=`https://fakestoreapi.com/products`;
+  let data=[];
+
+
+  let res=fetch(url);
+     res.then((x)=>{
+        return x.json()
+     }).then((q)=>{
+        display(q);
+        data=q;
+     });
+     let filt=document.getElementById("ss2");
+     filt.addEventListener("change",()=>{
+        if(filt.value===""){
+            display(data);
+        }else{
+       let m=data.filter((a,b)=>{
+        if(a.category===filt.value){
+            return true
+        }
+       })
+
+       display(m);
+    }
+     });
+     let arr=localStorage.getItem("cart");
+     if(arr==null){
+       arr=[];
+     }else{
+       arr=JSON.parse(arr);
+     }
+     let par=document.getElementById('ss1');
+     function display(data){
+        par.innerHTML=null;
+        data.forEach(e => {
+        let child=document.createElement("div");
+        let img=document.createElement("img");
+        img.setAttribute("src",e.image);
+        let title=document.createElement("h1");
+        title.innerText=e.title;
+        let des=document.createElement("h2")
+        des.innerText=e.description
+        let price=document.createElement("h2");
+        price.innerText=e.price;
+        let cate=document.createElement("h2");
+        cate.innerText=e.category;
+        let button=document.createElement("button");
+        button.innerText="add to cart"
+        
+        button.addEventListener("click", () => {
+        if (!arr.some(item => item.title === e.title)) {
+        arr.push(e);
+        let x = JSON.stringify(arr);
+        localStorage.setItem("cart", x);
+      }
+     });
+            child.append(img,title,des,price,cate,button);
+            par.append(child)
+     });
+    }
+codde3:-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+          img{
+            width: 200px;
+        }
+     #kk{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:15px;
+     }
+     #kk>div{
+        border:1px solid red;
+         text-align: center;
+     }
+    </style>
+</head>
+<body>
+    <a href="./addi1.html">back</a>
+       <div id="kk">
+       </div>
+</body>
+</html>
+<script>
+        let par=document.getElementById('kk')
+     let arr=localStorage.getItem("cart");
+     if(arr==null){
+       arr=[];
+     }else{
+       arr=JSON.parse(arr);
+     }
+        display(arr);
+     function display(data){
+        par.innerHTML="";
+        data.forEach((e,h) => {
+        let child=document.createElement("div");
+        let img=document.createElement("img");
+        img.setAttribute("src",e.image);
+        let title=document.createElement("h1");
+        title.innerText=e.title;
+        let des=document.createElement("h2")
+        des.innerText=e.description
+        let price=document.createElement("h2");
+        price.innerText=e.price;
+        let cate=document.createElement("h2");
+        cate.innerText=e.category;
+        let button=document.createElement("button");
+        button.innerText="remove from cart";
+        button.addEventListener("click",()=>{
+             let m11=data.filter((a,b)=>{
+                if(h===b){
+                    return false;
+                }else{
+                    return true;
+                }
+             })
+              localStorage.setItem("cart",JSON.stringify(m11));
+              display(m11)
+
+        })
+          child.append(img,title,des,cate,button);
+          par.append(child);
+        });
+     }
+</script>
