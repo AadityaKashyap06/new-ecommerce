@@ -1,0 +1,130 @@
+code:-1:-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<a href="bookmark112.html">Bookmark</a>
+<table border="5" cellspacing="0">
+    <thead>
+        <tr>
+            <td>id</td>
+            <td>title</td>
+            <td>Completed</td>
+            <td>Bookmark</td>
+        </tr>
+    </thead>
+    <tbody id="ss">
+
+    </tbody>
+</table>
+</body>
+</html>
+<script src="program1111.js">
+
+</script>
+code 2:-
+//js code:-
+let url=`https://jsonplaceholder.typicode.com/todos`;
+let body=document.getElementById("ss")
+   let m=fetch(url);
+   m.then((w)=>{
+    return w.json()
+   }).then((data)=>{
+    display(data);
+   })
+   let arr=localStorage.getItem("list");
+   if(arr==null){
+    arr=[]
+   }else{
+    arr=JSON.parse(arr);
+   }
+
+   function display(data){
+       body.innerHTML=null;
+  data.forEach(e=> {
+       let row=document.createElement("tr");
+       let c1=document.createElement("td");
+       c1.innerText=e.id;
+       let c2=document.createElement("td");
+       c2.innerText=e.title;
+       let c3=document.createElement("td");
+       c3.innerText=e.completed;
+       let c4=document.createElement("button");
+       c4.innerText="Bookmark";
+       // add to bookmark:-
+       c4.addEventListener("click",()=>{
+        if(!(arr.some(x=> x.title===e.title))){
+            arr.push(e);
+            localStorage.setItem("list",JSON.stringify(arr))
+        }
+       })
+       row.append(c1,c2,c3,c4);
+       body.append(row);
+  });
+   }
+//code3:-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="./program1111.html">Back</a>
+    <table border="5" cellspacing="0">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>title</td>
+                <td>Completed</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody id="ss">
+    
+        </tbody>
+    </table>
+</body>
+</html>
+<script>
+let body=document.getElementById("ss")
+ let arr=localStorage.getItem("list");
+   if(arr==null){
+    arr=[]
+   }else{
+    arr=JSON.parse(arr);
+   }
+   display(arr);
+   function display(data){
+    body.innerHTML=null;
+  data.forEach((e,y)=> {
+       let row=document.createElement("tr");
+       let c1=document.createElement("td");
+       c1.innerText=e.id;
+       let c2=document.createElement("td");
+       c2.innerText=e.title;
+       let c3=document.createElement("td");
+       c3.innerText=e.completed;
+       let c4=document.createElement("button");
+       c4.innerText="Delete";
+       c4.addEventListener("click", () => {
+            data = data.filter((a, b) => {
+                if(b===y){
+                    return false;
+                }else{
+                    return true;
+                }
+            });
+            localStorage.setItem("list", JSON.stringify(data));
+            display(data);
+        });
+       row.append(c1,c2,c3,c4);
+       body.append(row);
+  });
+   } 
+</script>
